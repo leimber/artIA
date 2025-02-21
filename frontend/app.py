@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 
 # Configurar el backend
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "http://127.0.0.1:8001"
+
 
 # Configurar la página con un diseño más atractivo y alegre
 st.set_page_config(
