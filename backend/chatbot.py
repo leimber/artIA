@@ -1,9 +1,13 @@
-from transformers import pipeline
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
-# Cambiar a un modelo mejorado
-chatbot = pipeline("text-generation", model="facebook/blenderbot-1B-distill")  # O usa otro modelo de la lista
+# Cargar modelo y tokenizador
+model_name = "facebook/blenderbot-1B-distill"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 def get_chatbot_response(query: str) -> str:
-    """Genera una respuesta más natural y mejorada."""
-    response = chatbot(query, max_length=100, do_sample=True)
-    return response[0]['generated_text']
+    """Genera respuestas conversacionales más detalladas con BlenderBot."""
+    inputs = tokenizer(query, return_tensors="pt")
+    response_ids = model.generate(**inputs, max_length=100)
+    response = tokenizer.decode(response_ids[0], skip_special_tokens=True)
+    return response
