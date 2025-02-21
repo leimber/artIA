@@ -1,0 +1,26 @@
+# Ignorar el entorno virtual
+venv/
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar archivos de logs y caché
+logs/
+*.log
+*.sqlite
+*.db
+.DS_Store
+
+# Ignorar modelos grandes de Hugging Face
+models/
+*.pth
+*.bin
+
+# Ignorar configuración del sistema
+.env
+.idea/
+.vscode/
+*.swp
