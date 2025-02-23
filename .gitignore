@@ -1,26 +1,69 @@
-# Ignorar el entorno virtual
-venv/
-
-# Ignorar archivos compilados de Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Ignorar archivos de logs y caché
-logs/
-*.log
-*.sqlite
-*.db
-.DS_Store
-
-# Ignorar modelos grandes de Hugging Face
-models/
-*.pth
-*.bin
-
-# Ignorar configuración del sistema
+## Environment variables
 .env
+.venv
+env/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
 .idea/
 .vscode/
 *.swp
+*.swo
+.DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+frontend/coverage/
+frontend/build/
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+log/
