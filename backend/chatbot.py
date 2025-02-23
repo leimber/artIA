@@ -1,13 +1,31 @@
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
+from typing import Dict
+import openai
 
-# Cargar modelo y tokenizador
-model_name = "facebook/blenderbot-1B-distill"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+def get_chatbot_response(query: str, context: list = None) -> Dict[str, str]:
+    """
+    Genera respuestas empáticas usando GPT-3.5/4
+    """
+    if context is None:
+        context = []
+    
+    messages = [
+        {"role": "system", "content": """Eres un asistente empático y comprensivo. 
+        Tu objetivo es escuchar, entender y proporcionar apoyo emocional.
+        Recuerda:
+        - Mostrar empatía y comprensión
+        - No juzgar
+        - Hacer preguntas abiertas cuando sea apropiado
+        - Validar sentimientos
+        - Sugerir recursos profesionales cuando sea necesario"""},
+    ] + context + [{"role": "user", "content": query}]
 
-def get_chatbot_response(query: str) -> str:
-    """Genera respuestas conversacionales más detalladas con BlenderBot."""
-    inputs = tokenizer(query, return_tensors="pt")
-    response_ids = model.generate(**inputs, max_length=100)
-    response = tokenizer.decode(response_ids[0], skip_special_tokens=True)
-    return response
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            temperature=0.7,
+            max_tokens=150
+        )
+        return response.choices[0].message["content"]
+    except Exception as e:
+        return {"error": str(e)}
