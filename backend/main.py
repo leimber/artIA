@@ -1,20 +1,21 @@
 from fastapi import FastAPI
-from backend.chatbot import get_chatbot_response
-from backend.emotion_detector import detect_emotion
+from fastapi.middleware.cors import CORSMiddleware
+from app.api.routes import router
 
-app = FastAPI(title="Asistente IA de Bienestar Emocional")
+app = FastAPI(title="ArtIA - Asistente de Bienestar Emocional")
 
-@app.get("/")
-def home():
-    return {"message": "ArtIA, Asistente IA de Bienestar Emocional"}
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # URL del frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.post("/chat")
-def chat(query: str):
-    """Procesa la entrada del usuario, responde y detecta emociones."""
-    response = get_chatbot_response(query)
-    emotion = detect_emotion(query)
-    return {"response": response, "emotion": emotion}
+# Incluir las rutas
+app.include_router(router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
